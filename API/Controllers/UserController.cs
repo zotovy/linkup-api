@@ -142,5 +142,24 @@ namespace API.Controllers {
 
             return Ok(new EmptyOkDto());
         }
+
+        [HttpPost("{id}/theme/{theme}")]
+        [Authorize, ValidationErrorFilter]
+        public IActionResult SetUserTheme(int id, int theme) {
+            // Authorize user
+            long tokenId = int.Parse(User.Claims.First(x => x.Type == "uid").Value);
+            if (id != tokenId) return new ObjectResult(new ForbiddenDto()) { StatusCode = 403 };
+            
+            // check theme
+            var max = (int)Enum.GetValues(typeof(Theme)).Cast<Theme>().Max();
+            var min = (int)Enum.GetValues(typeof(Theme)).Cast<Theme>().Min();
+            if (theme > max || theme < min) {
+                return BadRequest(new ChangeThemeErrorRequestDto());
+            }
+            
+            _service.ChangeTheme(id, (Theme)theme);
+
+            return Ok(new EmptyOkDto());
+        }
     }
 }

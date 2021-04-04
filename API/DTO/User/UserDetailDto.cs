@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using API.DTO.Link;
+using Domain.ValueObjects.User;
 
 namespace API.DTO.User {
     public sealed class UserDetailDtoWithLinks {
@@ -10,6 +11,7 @@ namespace API.DTO.User {
         public string email  { get; set; } 
         public string createdAt  { get; set; } 
         public string? profileImagePath  { get; set; }
+        public Theme theme { get; set; }
         public List<DetailLinkDto> links { get; set; }
         
         public UserDetailDtoWithLinks(Domain.User user) {
@@ -20,6 +22,7 @@ namespace API.DTO.User {
             createdAt = user.CreatedAt.ToUniversalTime().ToString("O");
             profileImagePath = user.ProfileImagePath?.Value;
             links = user.Links.Select(x => new DetailLinkDto(x.Model)).ToList();
+            theme = user.Theme;
         }
     }
     
@@ -30,6 +33,7 @@ namespace API.DTO.User {
         public string email  { get; set; } 
         public string createdAt  { get; set; } 
         public string? profileImagePath  { get; set; }
+        public Theme theme { get; set; }
         public List<int> links { get; set; }
         
         public UserDetailDto(Domain.User user) {
@@ -40,6 +44,7 @@ namespace API.DTO.User {
             createdAt = user.CreatedAt.ToUniversalTime().ToString("O");
             profileImagePath = user.ProfileImagePath?.Value;
             links = user.Links.Select(x => x.Id).ToList();
+            theme = user.Theme;
         }
     }
 }

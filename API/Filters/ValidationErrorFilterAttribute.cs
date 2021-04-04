@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Metadata.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -17,6 +18,15 @@ namespace API.Filters {
                 context.Result = new JsonResult(new Dictionary<string, dynamic> {
                     { "success", false },
                     { "error", error }
+                });
+                context.HttpContext.Response.StatusCode = 400;
+                context.ExceptionHandled = true;
+            }
+
+            if (exceptionType == typeof(NoUserFoundException)) {
+                context.Result = new JsonResult(new Dictionary<string, dynamic> {
+                    { "success", false },
+                    { "error", "no-user-found-error" }
                 });
                 context.HttpContext.Response.StatusCode = 400;
                 context.ExceptionHandled = true;
