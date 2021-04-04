@@ -12,7 +12,7 @@ namespace Database.User {
         public bool CheckEmailUniqueness(Email email);
         public bool CheckUsernameUniqueness(Username username);
         #nullable enable
-        public UserModel? GetUserById(long id);
+        public Domain.User? GetUserById(long id);
         public void ChangeUserAvatarPath(long id, string path);
         public void UpdateUser(Domain.User user);
     }

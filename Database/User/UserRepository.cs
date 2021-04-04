@@ -52,8 +52,14 @@ namespace Database.User {
             return founded == null;
         }
 
-        public UserModel? GetUserById(long id) {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+        public Domain.User? GetUserById(long id) {
+            var model = _context.Users
+                .Include(x => x.Links)
+                .FirstOrDefault(u => u.Id == id);
+
+            if (model == null) return null;
+            model.Links?.ForEach(x => x.User = null);
+            return model.ToDomain();
         }
 
         public void ChangeUserAvatarPath(long id, string path) {

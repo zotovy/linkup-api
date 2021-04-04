@@ -82,7 +82,7 @@ namespace Database.User {
         }
 
         public Domain.User ToDomain() {
-            return UserModel.ToDomain(this);
+            return ToDomain(this);
         }
 
         public bool CompareUsingEmailAndPassword(UserModel model) {

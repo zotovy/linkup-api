@@ -147,10 +147,7 @@ namespace Services.User {
             };
         }
 
-        #nullable enable
-        public Domain.User? GetUser(long id) {
-            return _userRepository.GetUserById(id)?.ToDomain();
-        }
+        public Domain.User? GetUser(long id) => _userRepository.GetUserById(id);
 
         public string SaveUserProfileImage(long id, byte[] image) {
             var filename = $"{id}.jpg"; 
