@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Server.IIS.Core;
 
@@ -23,6 +24,7 @@ namespace API.DTO {
                 errors.Add(new ValidateErrorElement(error.PropertyName, error.ErrorCode, error.ErrorMessage));
             }
         }
+        
     }
 
     public sealed class ValidateErrorElement {
