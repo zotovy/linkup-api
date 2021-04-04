@@ -6,7 +6,7 @@ namespace Domain.ValueObjects {
         public string Value { get; }
 
         public static readonly Regex HrefValidator = new(
-            @"(https?:\/\/.*\.(?:png|jpg|jpeg))",
+            @"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
             RegexOptions.Singleline | RegexOptions.Compiled
         );
 
@@ -18,8 +18,10 @@ namespace Domain.ValueObjects {
         }
 
         public Href(string value) {
-            if (value != null && (!HrefValidator.IsMatch(value) || !EmailHrefValidator.IsMatch(value) || value.Length > 1000)) {
-                throw new ArgumentException($"{value} is invalid href value.");
+            if (value != null) {
+                if (!HrefValidator.IsMatch(value) && !EmailHrefValidator.IsMatch(value) || value.Length > 1000) {
+                    throw new ArgumentException($"{value} is invalid href value.");
+                }
             }
 
             Value = value;

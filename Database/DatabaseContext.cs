@@ -11,6 +11,7 @@ namespace Database {
         public DatabaseContext() { }
 
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<LinkModel> Links { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);

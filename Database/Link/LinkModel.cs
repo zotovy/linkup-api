@@ -32,7 +32,7 @@ namespace Database.Link {
         public string IconName { get; set; }
 
         [Required]
-        [Column("Href", TypeName = "varchar(255)")]
+        [Column("Href", TypeName = "varchar(1000)")]
         public string Href { get; set; }
 
         [Required]

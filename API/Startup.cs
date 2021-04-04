@@ -36,7 +36,6 @@ namespace API {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserServices>();
             services.AddScoped<IMediaService, MediaService>();
-            services.AddScoped<ILinkRepository, LinkRepository>();
             services.AddScoped<ILinkService, LinkService>();
             services.AddScoped<IRenderService, RenderService>();
             services.AddControllers();
