@@ -33,7 +33,6 @@ namespace Services.Link {
             return model.Id;
         }
 
-        /// <exception cref="ArgumentException">thrown if no link found</exception>
         public void ChangeTo(Domain.Link link) {
             var model = _context.Links.FirstOrDefault(x => x.Id == link.Id);
             if (model == null) throw new ArgumentException($"no link found with id {link.Id}");
@@ -44,11 +43,22 @@ namespace Services.Link {
             if (link?.IconName.Value != null) model.IconName = link.IconName.Value;
 
             _context.SaveChanges();
+            
             // todo: trigger link page rebuild
         }
 
         public int? GetAuthorIdOf(int id) {
             return _context.Links.FirstOrDefault(x => x.Id == id)?.UserId;
+        }
+
+        public void Remove(int id) {
+            var model = _context.Links.FirstOrDefault(x => x.Id == id);
+            if (model == null) throw new ArgumentException($"no link found with id {id}");
+
+            _context.Links.Remove(model);
+            _context.SaveChanges();
+            
+            // todo: trigger link page rebuild
         }
     }
 }
