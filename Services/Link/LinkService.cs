@@ -12,7 +12,7 @@ namespace Services.Link {
         }
 
         /// <exception cref="ArgumentException">thrown if no author found</exception>
-        public void Add(Domain.Link link) {
+        public int Add(Domain.Link link) {
             var model = new LinkModel(link);
 
             var author = _context.Users.FirstOrDefault(x => x.Id == link.User.Id);
@@ -29,6 +29,8 @@ namespace Services.Link {
 
             _context.SaveChanges();
             // todo: trigger link page rebuild
+
+            return model.Id;
         }
 
         /// <exception cref="ArgumentException">thrown if no link found</exception>
@@ -43,6 +45,10 @@ namespace Services.Link {
 
             _context.SaveChanges();
             // todo: trigger link page rebuild
+        }
+
+        public int? GetAuthorIdOf(int id) {
+            return _context.Links.FirstOrDefault(x => x.Id == id)?.UserId;
         }
     }
 }
