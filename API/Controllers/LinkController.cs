@@ -53,5 +53,18 @@ namespace API.Controllers {
 
             return Ok(new EmptyOkDto());
         }
+
+        [HttpDelete("{id}")]
+        [Authorize, ValidationErrorFilter]
+        public IActionResult RemoveLink(int id) {
+            // Authorize user
+            var authorId = _service.GetAuthorIdOf(id);
+            long tokenId = int.Parse(User.Claims.First(x => x.Type == "uid").Value);
+            if (authorId != tokenId) return new ObjectResult(new ForbiddenDto()) { StatusCode = 403 };
+            
+            _service.Remove(id);
+
+            return Ok(new EmptyOkDto());
+        }
     }
 }
