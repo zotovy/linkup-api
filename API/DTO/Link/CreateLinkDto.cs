@@ -46,4 +46,13 @@ namespace API.DTO.Link {
             { "error", "no-user-found" }
         };
     }
+
+    public class CreateLinkSuccessResponseDto {
+        public bool success => true;
+        public int id { get; set; }
+
+        public CreateLinkSuccessResponseDto(int id) {
+            this.id = id;
+        }
+    }
 }
