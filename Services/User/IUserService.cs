@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Domain.ValueObjects.User;
+using Metadata.Exceptions;
 using Metadata.Services.UserMetadata;
 
 namespace Services.User {
@@ -14,5 +15,8 @@ namespace Services.User {
         public void ChangeUserAvatarPath(long id, string path);
         public void UpdateUser(Domain.User user);
         public bool IsUserExists(long id);
+        
+        /// <exception cref="NoUserFoundException">thrown if no user found</exception>
+        public void ChangeTheme(int id, Theme theme);
     }
 }

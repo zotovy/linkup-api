@@ -1,3 +1,4 @@
+using Domain.ValueObjects.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -27,6 +28,11 @@ namespace Database.User {
                 .Property(u => u.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+            
+            // Set default theme
+            builder
+                .Property(u => u.Theme)
+                .HasDefaultValue(Theme.Light);
             
             // Say that User have one-to-many relation ship with links
             builder

@@ -13,6 +13,7 @@ namespace Domain {
         public DateTime CreatedAt;
         public ImagePath? ProfileImagePath;
         public List<Ref<Link>> Links;
+        public Theme Theme;
 
         public bool CompareUsingEmailAndPassword(User user) {
             return Email == user.Email && Password == user.Password;

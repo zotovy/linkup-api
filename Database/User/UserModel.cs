@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Versioning;
 using Database.Link;
 using Domain;
 using Domain.ValueObjects;
@@ -42,8 +43,10 @@ namespace Database.User {
 
         [Required]
         public List<int> LinkIds { get; set; }
-
         public List<LinkModel>? Links { get; set; }
+        
+        [Required]
+        public Theme Theme { get; set; }
 
         public UserModel() { }
 
@@ -62,6 +65,7 @@ namespace Database.User {
             LinkIds = user.Links == null
                 ? new List<int>()
                 : user.Links.Select(x => x.Id).ToList();
+            Theme = user.Theme;
         }
 
         public static Domain.User ToDomain(UserModel model) {
@@ -78,6 +82,7 @@ namespace Database.User {
                 Links = model.Links == null | model.Links?.Count == 0
                     ? model.LinkIds.Select(x => new Ref<Domain.Link>(x)).ToList()
                     : model.Links.Select(x => new Ref<Domain.Link>(x.Id, x.ToDomain())).ToList(),
+                Theme = model.Theme
             };
         }
 

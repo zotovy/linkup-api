@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Database;
 using Database.Link;
+using Metadata.Exceptions;
 
 namespace Services.Link {
     public class LinkService : ILinkService {
@@ -16,7 +17,7 @@ namespace Services.Link {
             var model = new LinkModel(link);
 
             var author = _context.Users.FirstOrDefault(x => x.Id == link.User.Id);
-            if (author == null) throw new ArgumentException($"no user found with id {link.User.Id}");
+            if (author == null) throw new NoUserFoundException();
 
             // save link
             _context.Links.Add(model);

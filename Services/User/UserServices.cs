@@ -4,9 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Database;
 using Database.User;
 using Domain.ValueObjects;
 using Domain.ValueObjects.User;
+using Metadata.Exceptions;
 using Metadata.Objects;
 using Metadata.Services.UserMetadata;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +21,13 @@ namespace Services.User {
         private readonly IUserRepository _userRepository;
         private readonly IMediaService _mediaService;
         private readonly IConfiguration _configuration;
+        private readonly DatabaseContext _context;
 
-        public UserServices(IUserRepository userRepository, IMediaService mediaService, IConfiguration configuration) {
+        public UserServices(IUserRepository userRepository, IMediaService mediaService, IConfiguration configuration, DatabaseContext context) {
             _userRepository = userRepository;
             _mediaService = mediaService;
             _configuration = configuration;
+            _context = context;
         }
 
         public IEnumerable<Domain.User> GetUsers() {
@@ -169,5 +173,13 @@ namespace Services.User {
         public void UpdateUser(Domain.User user) => _userRepository.UpdateUser(user);
 
         public bool IsUserExists(long id) => GetUser(id) != null;
+
+        public void ChangeTheme(int id, Theme theme) {
+            var model = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (model == null) throw new NoUserFoundException(id);
+            
+            model.Theme = theme;
+            _context.SaveChanges();
+        }
     }
 }
