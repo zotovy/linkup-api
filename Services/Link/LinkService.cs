@@ -3,13 +3,16 @@ using System.Linq;
 using Database;
 using Database.Link;
 using Metadata.Exceptions;
+using Services.Render;
 
 namespace Services.Link {
     public class LinkService : ILinkService {
         private readonly DatabaseContext _context;
+        private readonly IRenderService _renderService;
 
-        public LinkService(DatabaseContext context) {
+        public LinkService(DatabaseContext context, IRenderService renderService) {
             _context = context;
+            _renderService = renderService;
         }
 
         /// <exception cref="ArgumentException">thrown if no author found</exception>
@@ -29,7 +32,7 @@ namespace Services.Link {
             author.LinkIds.Add(model.Id);
 
             _context.SaveChanges();
-            // todo: trigger link page rebuild
+            _renderService.BuildUserPage(model.UserId);
 
             return model.Id;
         }
@@ -45,7 +48,7 @@ namespace Services.Link {
 
             _context.SaveChanges();
             
-            // todo: trigger link page rebuild
+            _renderService.BuildUserPage(model.UserId);
         }
 
         public int? GetAuthorIdOf(int id) {
@@ -59,7 +62,7 @@ namespace Services.Link {
             _context.Links.Remove(model);
             _context.SaveChanges();
             
-            // todo: trigger link page rebuild
+            _renderService.BuildUserPage(model.UserId);
         }
     }
 }
