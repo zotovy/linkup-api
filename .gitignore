@@ -1,0 +1,11 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+.idea/
+API/appsettings.Development.json
+.DS_Store
+.DS_Store
+API/static/profile-image
+API/appsettings.json

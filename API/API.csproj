@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="10.0.0-preview2" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Database\Database.csproj" />
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\Services\Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="static\profile-image" />
+    </ItemGroup>
+
+</Project>
