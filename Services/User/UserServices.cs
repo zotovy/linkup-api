@@ -15,17 +15,22 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Services.Data;
 using Services.Media;
+using Services.Render;
 
 namespace Services.User {
     public class UserServices : IUserService {
         private readonly IUserRepository _userRepository;
         private readonly IMediaService _mediaService;
+        private readonly IRenderService _renderService;
         private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
 
-        public UserServices(IUserRepository userRepository, IMediaService mediaService, IConfiguration configuration, DatabaseContext context) {
+
+        public UserServices(IUserRepository userRepository, IMediaService mediaService, IRenderService renderService,
+            IConfiguration configuration, DatabaseContext context) {
             _userRepository = userRepository;
             _mediaService = mediaService;
+            _renderService = renderService;
             _configuration = configuration;
             _context = context;
         }
@@ -90,14 +95,14 @@ namespace Services.User {
                 Password = new Password(raw.Password),
                 CreatedAt = DateTime.Now,
                 ProfileImagePath = new ImagePath(),
-                Username =  new Username(raw.Username),
+                Username = new Username(raw.Username),
             };
 
             // Check uniqueness of email
             if (!_userRepository.CheckEmailUniqueness(user.Email)) {
                 return new SignupResponse(false, SignupResponseError.EmailUniqueness);
             }
-            
+
             // Check uniqueness of username
             if (!_userRepository.CheckUsernameUniqueness(user.Username)) {
                 return new SignupResponse(false, SignupResponseError.UsernameUniqueness);
@@ -154,14 +159,14 @@ namespace Services.User {
         public Domain.User? GetUser(long id) => _userRepository.GetUserById(id);
 
         public string SaveUserProfileImage(long id, byte[] image) {
-            var filename = $"{id}.jpg"; 
-            
+            var filename = $"{id}.jpg";
+
             // check is user already have custom avatar
             if (_mediaService.CheckExistUserProfilePicture(filename)) {
                 // delete this file if exists
                 _mediaService.DeleteUserProfilePicture(filename);
             }
-            
+
             // save new file
             _mediaService.SaveUserProfilePicture(image, filename);
 
@@ -177,9 +182,11 @@ namespace Services.User {
         public void ChangeTheme(int id, Theme theme) {
             var model = _context.Users.FirstOrDefault(x => x.Id == id);
             if (model == null) throw new NoUserFoundException(id);
-            
+
             model.Theme = theme;
             _context.SaveChanges();
+            
+            _renderService.BuildUserPage(id);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Database.User {
                     : null,
                 Links = model.Links == null | model.Links?.Count == 0
                     ? model.LinkIds.Select(x => new Ref<Domain.Link>(x)).ToList()
-                    : model.Links.Select(x => new Ref<Domain.Link>(x.Id, x.ToDomain())).ToList(),
+                    : model.Links.Select(x => new Ref<Domain.Link>(x.Id, x.ToDomain(false))).ToList(),
                 Theme = model.Theme
             };
         }

@@ -75,12 +75,17 @@ namespace API {
             }
 
             app.UseHttpsRedirection();
-            // using Microsoft.Extensions.FileProviders;
-            // using System.IO;
+            
             app.UseStaticFiles(new StaticFileOptions {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.ContentRootPath, "static/profile-image")),
                 RequestPath = "/static/profile-image"
+            });
+            
+            app.UseStaticFiles(new StaticFileOptions {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "static/pages")),
+                RequestPath = "/page"
             });
 
             app.UseRouting();

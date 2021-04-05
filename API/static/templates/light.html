@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ name }}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Poppins, serif;
+            background-color: #f6f6fb;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .links a {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: initial;
+        }
+
+        .user {
+            margin-top: 60px;
+        }
+
+        .user-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-image: url("{{ imagePath }}");
+            background-position: center;
+            background-size: cover;
+            margin: 10px auto 15px;
+        }
+
+        span.user-name {
+            font-size: 20px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: left;
+            color: #14142b;
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 47px;
+        }
+
+        .link {
+            cursor: pointer;
+            text-decoration: none;
+            padding: 11px;
+            border-radius: 16px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            max-width: 400px;
+            width: calc(100% - 40px);
+            transition: background-color 300ms;
+            margin: 0 20px 18px;
+        }
+
+        .link-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .link:hover {
+            background-color: #fEfEfE;
+        }
+
+        svg.link-icon {
+            width: 38px;
+            margin-right: 10px;
+        }
+
+        span.link-title {
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            color: #14142b;
+        }
+
+        p.link-subtitle {
+            font-size: 12px;
+            text-align: left;
+            color: #4e4b66;
+        }
+
+        div.linkup {
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 15px;
+            left: 0;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .linkup a {
+            display: flex;
+            align-items: center;
+        }
+
+        img.logo {
+            width: 28px;
+            margin-right: 10px;
+        }
+
+        span.linkup {
+            font-size: 18px;
+            font-weight: 500;
+            text-align: left;
+            color: #5f2eea;
+        }
+
+        .ball {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.0075);
+            z-index: 1000;
+        }
+
+        .ball-1 {
+            width: 320px;
+            height: 320px;
+            top: 50px;
+            left: -160px;
+        }
+
+        .ball-2 {
+            width: 250px;
+            height: 250px;
+            top: 200px;
+            right: -160px;
+        }
+
+        .ball-3 {
+            border-radius: 0 500px 0 0;
+            width: 256px;
+            height: 200px;
+            bottom: 0px;
+            left: -175px;
+        }
+
+        ion-icon {
+            font-size: 32px;
+            color: #5f2eea;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="user">
+        <div class="user-avatar"></div>
+        <span class="user-name">{{ name }}</span>
+    </div>
+
+    <div class="links">
+        {% links %}
+<!--        <a href="https://instagram.com/_zotovy">-->
+<!--            <div class="link">-->
+<!--                <ion-icon name="logo-instagram" class="link-icon"></ion-icon>-->
+<!--                <div class="link-info">-->
+<!--                    <span class="link-title">Instagram</span>-->
+<!--                    <p class="link-subtitle">My main ig account. Follow me!</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="link">-->
+<!--                <img src="icon.png" alt="icon" class="link-icon">-->
+<!--                <div class="link-info">-->
+<!--                    <span class="link-title">Instagram</span>-->
+<!--                    <p class="link-subtitle">My main ig account. Follow me!</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </a>-->
+    </div>
+
+    <div class="linkup" >
+        <a href="https://linkup.com">
+            <img src="logo.png" alt="linkup logo" class="logo">
+            <span class="linkup">LinkUp</span>
+        </a>
+    </div>
+
+    <div class="ball ball-1"></div>
+    <div class="ball ball-2"></div>
+    <div class="ball ball-3"></div>
+</body>
+</html>

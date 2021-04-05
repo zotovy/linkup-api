@@ -64,6 +64,18 @@ namespace Database.Link {
                 CreatedAt = CreatedAt,
             };
         }
+        
+        public Domain.Link ToDomain(bool needUser) {
+            return new() {
+                Id = Id,
+                User = new Ref<Domain.User>(UserId, needUser ? User?.ToDomain() : null),
+                Title = new Title(Title),
+                Subtitle = new Subtitle(Subtitle),
+                IconName = new IconName(IconName),
+                Href = new Href(Href),
+                CreatedAt = CreatedAt,
+            };
+        }
 
     }
 }
