@@ -9,6 +9,7 @@ namespace Metadata.Services.UserMetadata {
 
         public SignupResponse(bool success, SignupResponseError error) {
             Success = success;
+            Error = error;
         }
 
         public SignupResponse(bool success, long userId, string access, string refresh) {
