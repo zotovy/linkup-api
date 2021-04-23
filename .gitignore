@@ -8,4 +8,5 @@ API/appsettings.Development.json
 .DS_Store
 .DS_Store
 API/static/profile-image
+API/static/pages
 API/appsettings.json
