@@ -158,7 +158,7 @@ namespace Services.User {
 
         public Domain.User? GetUser(long id) => _userRepository.GetUserById(id);
 
-        public string SaveUserProfileImage(long id, byte[] image) {
+        public string SaveUserProfileImage(int id, byte[] image) {
             var filename = $"{id}.jpg";
 
             // check is user already have custom avatar
@@ -173,7 +173,10 @@ namespace Services.User {
             return $"{_configuration["Server"]}/static/profile-image/{filename}";
         }
 
-        public void ChangeUserAvatarPath(long id, string path) => _userRepository.ChangeUserAvatarPath(id, path);
+        public void ChangeUserAvatarPath(int id, string path) {
+            _userRepository.ChangeUserAvatarPath(id, path);
+            _renderService.BuildUserPage(id);
+        }
 
         public void UpdateUser(Domain.User user) {
             _userRepository.UpdateUser(user);

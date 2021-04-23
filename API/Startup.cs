@@ -60,11 +60,6 @@ namespace API {
                 x.AssumeDefaultVersionWhenUnspecified = true;
                 x.ReportApiVersions = true;
             });
-
-            services.AddCors(options => {
-                options.AddPolicy(name: "ApiCorsPolicy",
-                    builder => { builder.WithOrigins(Configuration["Client"]).AllowAnyMethod().AllowAnyHeader(); });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,7 +85,12 @@ namespace API {
 
             app.UseRouting();
             app.UseCors(
-                options => options.WithOrigins(Configuration["Client"]).AllowAnyMethod().AllowAnyHeader()
+                options => options
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .WithOrigins(Configuration["Client"])
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
             );
             app.UseAuthentication();
             app.UseAuthorization();

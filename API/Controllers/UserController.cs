@@ -99,7 +99,7 @@ namespace API.Controllers {
         }
 
         [HttpPost("{id}/change-profile-image"), Authorize]
-        public IActionResult ChangeProfileImage(long id, [FromForm] ChangeProfileImageDto body) {
+        public IActionResult ChangeProfileImage(int id, [FromForm] ChangeProfileImageDto body) {
             // Authorize user
             long tokenId = int.Parse(User.Claims.First(x => x.Type == "uid").Value);
             if (id != tokenId) return new ObjectResult(new ForbiddenDto()) { StatusCode = 403 };
