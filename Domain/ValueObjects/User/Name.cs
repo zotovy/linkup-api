@@ -6,7 +6,7 @@ namespace Domain.ValueObjects.User {
         public string Value { get; }
 
         public static readonly Regex Validator = new Regex(
-            "/^[^~,]*$/",
+            "^[^~,]*$",
             RegexOptions.Singleline | RegexOptions.Compiled
         );
 
