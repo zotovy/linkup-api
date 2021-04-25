@@ -41,8 +41,14 @@ namespace API.DTO.Link {
 
             RuleFor(x => x.href)
                 .MaximumLength(1000)
+                .Matches(Href.PhoneHrefValidator)
+                .When(x => x.href != null && x.href[0] == 't');
+
+            RuleFor(x => x.href)
+                .MaximumLength(1000)
                 .Matches(Href.HrefValidator)
-                .When(x => x.href != null && x.href[0] != 'm');
+                .When(x => x.href != null && x.href[0] != 'm' && x.href[0] != 't');
+
 
             RuleFor(x => x.iconName)
                 .MaximumLength(200)
