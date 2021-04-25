@@ -11,7 +11,11 @@ namespace Domain.ValueObjects {
         );
 
         public static readonly Regex EmailHrefValidator = new(
-            @"^(?:mailto):[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+            @"^mailto:(\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)$"
+        );
+
+        public static readonly Regex PhoneHrefValidator = new(
+            @"^tel:(\+?)(\d{1,16})$"
         );
 
         public Href() {
@@ -19,7 +23,7 @@ namespace Domain.ValueObjects {
 
         public Href(string value) {
             if (value != null) {
-                if (!HrefValidator.IsMatch(value) && !EmailHrefValidator.IsMatch(value) || value.Length > 1000) {
+                if ((!HrefValidator.IsMatch(value) && !PhoneHrefValidator.IsMatch(value) && !EmailHrefValidator.IsMatch(value)) || value.Length > 1000) {
                     throw new ArgumentException($"{value} is invalid href value.");
                 }
             }
