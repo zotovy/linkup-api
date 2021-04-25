@@ -1,4 +1,5 @@
 using System;
+using System.Data.Entity;
 using System.Linq;
 using Database;
 using Database.Link;
@@ -58,10 +59,16 @@ namespace Services.Link {
         public void Remove(int id) {
             var model = _context.Links.FirstOrDefault(x => x.Id == id);
             if (model == null) throw new ArgumentException($"no link found with id {id}");
-
-            _context.Links.Remove(model);
-            _context.SaveChanges();
             
+            // remove link
+            _context.Links.Remove(model);
+            
+            // remove id of this link from author
+            var author = _context.Users.FirstOrDefault(x => x.Id == model.UserId);
+            if (author == null) throw new NoUserFoundException();
+            author.LinkIds = author.LinkIds.Where(x => x != id).ToList();
+            
+            _context.SaveChanges();
             _renderService.BuildUserPage(model.UserId);
         }
     }
